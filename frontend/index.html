@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aerovane — Weather Prediction &amp; Recommendation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="scanline-overlay"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">✵</span>
+    <span class="brand-name">AEROVANE</span>
+    <span class="brand-sub">weather intelligence station</span>
+  </div>
+  <form class="search-form" id="searchForm">
+    <input type="text" id="cityInput" placeholder="Enter city — e.g. Kolkata" autocomplete="off" required>
+    <button type="submit">Read Station</button>
+  </form>
+</header>
+
+<main class="dashboard" id="dashboard">
+
+  <section class="panel hero-panel" id="heroPanel">
+    <div class="panel-label">01 — CURRENT READING</div>
+    <div class="hero-body">
+      <div class="dial-wrap">
+        <svg id="dialGauge" viewBox="0 0 220 220" class="dial">
+          <circle cx="110" cy="110" r="96" class="dial-track"/>
+          <circle cx="110" cy="110" r="96" class="dial-fill" id="dialFill"/>
+          <g id="dialTicks"></g>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-temp" id="dialTemp">--°</div>
+          <div class="dial-cond" id="dialCond">awaiting reading</div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-city" id="heroCity">— select a station —</div>
+        <div class="stat-row">
+          <div class="stat"><span class="stat-label">Feels like</span><span class="stat-val" id="statFeels">--</span></div>
+          <div class="stat"><span class="stat-label">Humidity</span><span class="stat-val" id="statHumidity">--</span></div>
+          <div class="stat"><span class="stat-label">Pressure</span><span class="stat-val" id="statPressure">--</span></div>
+          <div class="stat"><span class="stat-label">Wind</span><span class="stat-val" id="statWind">--</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="forecastPanel">
+    <div class="panel-label">02 — 5-DAY OBSERVED FORECAST</div>
+    <div class="forecast-strip" id="forecastStrip">
+      <div class="empty-note">Search a city to load the forecast tape.</div>
+    </div>
+  </section>
+
+  <section class="panel" id="predictPanel">
+    <div class="panel-label">03 — ML TEMPERATURE PREDICTION (NEXT 5 DAYS)</div>
+    <div class="predict-body">
+      <canvas id="predictChart" height="110"></canvas>
+    </div>
+    <div class="panel-footnote">Model: RandomForestRegressor · recursive multi-day forecast seeded from live conditions</div>
+  </section>
+
+  <section class="panel" id="recPanel">
+    <div class="panel-label">04 — RECOMMENDATIONS</div>
+    <div class="rec-grid" id="recGrid">
+      <div class="empty-note">Recommendations appear once a station is read.</div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
